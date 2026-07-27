@@ -21,7 +21,7 @@ for iter in range(10000):
     l1 = nonlin(np.dot(l0,syn0))
 
     l1_error = y - l1
-
+    
 
     l1_delta = l1_error * nonlin(l1, True)
 
