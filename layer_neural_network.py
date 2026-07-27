@@ -1,5 +1,5 @@
 import numpy as np
-
+import random
 def nonlin(x, deriv = False):
     if (deriv == True):
         return x*(1-x)
