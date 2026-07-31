@@ -18,15 +18,31 @@ url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
 names = ["spepal-length", "spepal-width", "petal-length", "petal-width", "class"]
 dataset = read_csv(url, names=names)
 
-print(dataset.shape)
-print(dataset.head(20))
-print(dataset.describe())
-print(dataset.groupby('class').size())
 
-scatter_matrix(dataset)
-plt.show()
 
 array = dataset.values
 x = array[:,0:4]
 y = array[:,4]
 x_train, x_validation, y_train, y_validation = train_test_split(x, y, test_size= 0.2, random_state=1)
+
+models = []
+models.append(("LR", LogisticRegression(max_iter=200)))
+models.append(("LDA", LinearDiscriminantAnalysis()))
+models.append(("KNN", KNeighborsClassifier()))
+models.append(("CART", DecisionTreeClassifier()))
+models.append(("NB",GaussianNB()))
+models.append(("SVM", SVC(gamma="auto")))
+
+results = []
+names = []
+
+for name, model in models:
+    kfold = StratifiedKFold(n_splits=10, random_state= 1, shuffle= True)
+    cv_results = cross_val_score(model, x_train, y_train, cv = kfold, scoring= "accuracy")
+    results.append(cv_results)
+    names.append(name)
+    print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+
+plt.boxplot(results, label=names)
+plt.title('Algorithm Comparison')
+plt.show()
