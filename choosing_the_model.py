@@ -42,3 +42,4 @@ for name, model in models:
     results.append(cv_results)
     names.append(name)
     print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+
