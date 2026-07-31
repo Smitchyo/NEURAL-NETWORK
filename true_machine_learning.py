@@ -23,5 +23,10 @@ print(dataset.head(20))
 print(dataset.describe())
 print(dataset.groupby('class').size())
 
-dataset.plot(kind = "box", subplots= True, layout = (2,2), sharex = False, sharey = False,)
+scatter_matrix(dataset)
 plt.show()
+
+array = dataset.values
+x = array[:,0:4]
+y = array[:,4]
+x_train, x_validation, y_train, y_validation = train_test_split(x, y, test_size= 0.2, random_state=1)
